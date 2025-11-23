@@ -9,6 +9,7 @@ import MyAddedJobs from "../pages/myAddedJobs/MyAddedJobs";
 import UpdateJob from "../pages/updateJob/UpdateJob";
 import Login from "../pages/auth/login/Login";
 import Register from "../pages/auth/register/Register";
+import PrivateRouter from "./PrivateRouter";
 
 
 const router = createBrowserRouter([
@@ -22,7 +23,9 @@ const router = createBrowserRouter([
       },
       {
         path: "add-job",
-        element: <AddJob></AddJob>,
+        element: <PrivateRouter>
+          <AddJob></AddJob>
+        </PrivateRouter>,
       },
       {
         path: "all-job",
@@ -34,7 +37,9 @@ const router = createBrowserRouter([
       },
       {
         path: "my-added-jobs",
-        element: <MyAddedJobs></MyAddedJobs>,
+        element: <PrivateRouter>
+          <MyAddedJobs></MyAddedJobs>
+        </PrivateRouter>,
       },
       {
         path: "update-job",
@@ -42,7 +47,9 @@ const router = createBrowserRouter([
       },
       {
         path: "my-accepted-task",
-        element: <MyAcceptedTasks></MyAcceptedTasks>,
+        element: <PrivateRouter>
+          <MyAcceptedTasks></MyAcceptedTasks>
+        </PrivateRouter>,
       },
       //   Authentication pages
       {

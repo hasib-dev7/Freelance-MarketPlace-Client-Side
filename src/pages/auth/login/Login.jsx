@@ -57,6 +57,7 @@ const Login = () => {
   // google login
   const handleGoogle = () => {
     googleSignIn().then((res) => {
+      
       setUser(res.user);
       const userName = res.user.displayName || "User"; // fallback
       toast.success(`Welcome back, ${userName}! 🎉`, {});

@@ -8,7 +8,7 @@ const Home = () => {
   console.log(name)
     return (
         <>
-          <h1>Home pages</h1>  
+          <h1 className="text-5xl text-danger">Home pages</h1>  
        
         </>
     );

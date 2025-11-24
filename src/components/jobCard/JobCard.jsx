@@ -1,7 +1,8 @@
 /* eslint-disable no-unused-vars */
 import { motion } from "framer-motion";
+import { Link } from "react-router";
 const JobCard = ({ job }) => {
-  const { title, category, date, description, image, userName } = job;
+  const { title, category, date, description, image,_id } = job;
 //   date formating
 const dateFormate=(dataString)=>{
     const now=new Date()
@@ -10,7 +11,7 @@ const dateFormate=(dataString)=>{
     const hours=Math.floor(diff/(1000*60*60))
     const days=Math.floor(diff/(1000*60*60*24))
     if(hours<24){
-        return `${hours} hours ago`
+        return `${hours}  hours ago`
     }
     if(days<30){
         return `${days} days ago`
@@ -32,8 +33,9 @@ const dateFormate=(dataString)=>{
             {title}
           </h2>
           
-          <p className="text-sm font-sans text-gray-700 mt-5">{description.split(" ").slice(0,13).join(" ")+"..."}</p>
+          <p className="text-lg font-sans text-gray-700 mt-5">{description.split(" ").slice(0,11).join(" ")+"..."}</p>
           <div className=" mt-5">
+            <Link to={`/job-details/${_id}`}>
             <motion.button
               className="w-full text-xl font-medium text-[#0F172A] border border-gray-200 bg-gray-100 hover:bg-[#0B74FF] hover:text-white  py-3 px-3 rounded-lg mb-5"
               whileTap={{ scale: 0.99 }}
@@ -41,6 +43,7 @@ const dateFormate=(dataString)=>{
             >
               View Details
             </motion.button>
+            </Link>
           </div>
         </div>
       </div>

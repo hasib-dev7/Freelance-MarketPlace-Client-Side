@@ -3,14 +3,14 @@ import MainLayout from "../layout/MainLayout";
 import Home from "../pages/Home/Home";
 import AddJob from "../pages/addJob/AddJob";
 import AllJob from "../pages/allJob/AllJob";
-import AllJobDetails from "../pages/allJobDetails/AllJobDetails";
+
 import MyAcceptedTasks from "../pages/myAcceptedTasks/MyAcceptedTasks";
 import MyAddedJobs from "../pages/myAddedJobs/MyAddedJobs";
 import UpdateJob from "../pages/updateJob/UpdateJob";
 import Login from "../pages/auth/login/Login";
 import Register from "../pages/auth/register/Register";
 import PrivateRouter from "./PrivateRouter";
-
+import JobDetails from "../pages/jobDetails/JobDetails";
 
 const router = createBrowserRouter([
   {
@@ -23,23 +23,27 @@ const router = createBrowserRouter([
       },
       {
         path: "add-job",
-        element: <PrivateRouter>
-          <AddJob></AddJob>
-        </PrivateRouter>,
+        element: (
+          <PrivateRouter>
+            <AddJob></AddJob>
+          </PrivateRouter>
+        ),
       },
       {
         path: "all-job",
         element: <AllJob></AllJob>,
       },
       {
-        path: "job-details",
-        element: <AllJobDetails></AllJobDetails>,
+        path: "job-details/:id",
+        element: <JobDetails></JobDetails>,
       },
       {
         path: "my-added-jobs",
-        element: <PrivateRouter>
-          <MyAddedJobs></MyAddedJobs>
-        </PrivateRouter>,
+        element: (
+          <PrivateRouter>
+            <MyAddedJobs></MyAddedJobs>
+          </PrivateRouter>
+        ),
       },
       {
         path: "update-job",
@@ -47,9 +51,11 @@ const router = createBrowserRouter([
       },
       {
         path: "my-accepted-task",
-        element: <PrivateRouter>
-          <MyAcceptedTasks></MyAcceptedTasks>
-        </PrivateRouter>,
+        element: (
+          <PrivateRouter>
+            <MyAcceptedTasks></MyAcceptedTasks>
+          </PrivateRouter>
+        ),
       },
       //   Authentication pages
       {
@@ -60,7 +66,6 @@ const router = createBrowserRouter([
         path: "auth/register",
         element: <Register></Register>,
       },
-      
     ],
   },
 ]);

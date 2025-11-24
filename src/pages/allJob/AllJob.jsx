@@ -25,7 +25,7 @@ const AllJob = () => {
   }, []);
   if (loading) return <LoadingSpinner></LoadingSpinner>;
   if (error) return <p className="text-red-500 text-xl">{error}</p>;
-  console.log("all job data", jobs);
+//   console.log("all job data", jobs);
   return (
     <>
       <div className="py-5 md:py-8 lg:py-10 mb-5">

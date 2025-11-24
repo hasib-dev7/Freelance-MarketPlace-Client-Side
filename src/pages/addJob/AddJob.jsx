@@ -5,15 +5,13 @@ import { AuthContext } from "../../context/AuthContex";
 import { toast } from "react-toastify";
 import { RingLoader } from "react-spinners";
 
-
-
 const AddJob = () => {
   const { user } = use(AuthContext);
-  const [isSubmitting,setIsSubmitting]=useState(false)
+  const [isSubmitting, setIsSubmitting] = useState(false);
   //   console.log(user.email);
   const emailAddress =
     user.email || (user.providerData[0] && user.providerData[0].email);
-//   console.log(emailAddress);
+  //   console.log(emailAddress);
   const cardVariants = {
     hidden: { opacity: 0, y: 30, scale: 0.98 },
     show: {
@@ -25,46 +23,51 @@ const AddJob = () => {
   };
   const message = "Post a New Job";
   const word = message.split(" ");
-//   add job post 
-const handleJobPost=async(e)=>{
-    e.preventDefault()
-    const title=e.target.title.value;
-    const userName=e.target.PostUserName.value;
-    const category=e.target.category.value;
-    const description=e.target.description.value;
-    const image=e.target.image.value;
-    const now=new Date()
-    const date=now.toISOString();
+  //   add job post
+  const handleJobPost = async (e) => {
+    e.preventDefault();
+    const title = e.target.title.value;
+    const userName = e.target.PostUserName.value;
+    const userEmail = e.target.postUserEmail.value;
+    const category = e.target.category.value;
+    const description = e.target.description.value;
+    const image = e.target.image.value;
+    const now = new Date();
+    const date = now.toISOString();
     // post job to the server
-    const postJob={
-        title,userName,category,description,image,date
-    }
-    // 
+    const postJob = {
+      title,
+      userName,
+      category,
+      description,
+      image,
+      date,
+      userEmail,
+    };
+    //
     try {
-        setIsSubmitting(true)
-        await fetch("http://localhost:8000/jobs",{
-          method:"POST",
-          headers:{
-            "content-type":"application/json"
-          },
-          body:JSON.stringify(postJob)
-        })
-        .then(res=>res.json())
-        .then(data=>{
-          if(data.insertedId)
-            console.log("data")
-        setTimeout(()=>{
-            toast.success(`${title} Job Posted Successfully!`)
-            setIsSubmitting(false)
-            e.target.reset()
-        },1000)
-        })
+      setIsSubmitting(true);
+      await fetch("http://localhost:8000/jobs", {
+        method: "POST",
+        headers: {
+          "content-type": "application/json",
+        },
+        body: JSON.stringify(postJob),
+      })
+        .then((res) => res.json())
+        .then((data) => {
+          if (data.insertedId) console.log("data");
+          setTimeout(() => {
+            toast.success(`${title} Job Posted Successfully!`);
+            setIsSubmitting(false);
+            e.target.reset();
+          }, 1000);
+        });
     } catch (error) {
-        console.log(error)
+      console.log(error);
     }
-    console.log(postJob)
-
-}
+    console.log(postJob);
+  };
   return (
     <>
       <motion.div
@@ -96,7 +99,6 @@ const handleJobPost=async(e)=>{
           {/* jobs title */}
           <div className=" mt-5">
             <label className=" text-gray-800 font-medium text-sm ">
-             
               Job Title
             </label>
             <input
@@ -202,22 +204,24 @@ const handleJobPost=async(e)=>{
             </label>
             <input
               type="text"
-              name="post-user-email"
+              name="postUserEmail"
               value={emailAddress}
               readOnly
               className="w-full border-2 bg-[#f8f9fb] border-gray-300 rounded-lg px-4 py-2 mt-2 outline-none transition focus:border-indigo-400 text-gray-700  text-sm font-sans"
             />
           </div>
-          {/* Posted By email */}
+          {/* button */}
           <div className=" mt-5">
             <motion.button
               className="w-full text-white bg-[#0B74FF] hover:bg-[#075ED6] py-3 px-3 rounded-lg"
               whileTap={{ scale: 0.99 }}
               whileHover={{ scale: 1.01, transition: { yoyo: Infinity } }}
             >
-             {
-                isSubmitting?<RingLoader color="#00ff6e" size={30} />:"Post Job"
-             }
+              {isSubmitting ? (
+                <RingLoader color="#00ff6e" size={30} />
+              ) : (
+                "Post Job"
+              )}
             </motion.button>
           </div>
         </form>

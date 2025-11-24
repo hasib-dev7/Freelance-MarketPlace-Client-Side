@@ -5,13 +5,13 @@ import Animation from "../../../components/animation/Animation";
 import { use, useState } from "react";
 import { AuthContext } from "../../../context/AuthContex";
 import { toast } from "react-toastify";
-import { Eye, EyeOff } from "lucide-react";
+import { Briefcase, Eye, EyeOff } from "lucide-react";
 const Register = () => {
   const [toggle, setToggle] = useState(false);
   const { createUser, updateUserProfile, setUser, googleSignIn } =
     use(AuthContext);
   const navigate = useNavigate();
-  const message = "Register now!";
+  const message = "Join TaskHub";
   const word = message.split(" ");
   const cardVariants = {
     hidden: { opacity: 0, y: 30, scale: 0.98 },
@@ -118,23 +118,31 @@ const Register = () => {
           animate="show"
           className=" w-full max-w-md bg-white/80 backdrop-blur-md rounded-2xl shadow-xl p-8 border border-white/40 "
         >
-          <h2 className="text-2xl font-semibold text-gray-800 text-center mb-6">
-            {word.map((text, indext) => (
-              <motion.span
-                key={indext}
-                initial={{ opacity: 0, x: -40 }}
-                animate={{ opacity: 1, x: 0 }}
-                transition={{
-                  duration: 0.6,
-                  delay: indext * 0.2,
-                  ease: "easeInOut",
-                }}
-              >
-                {text}{" "}
-              </motion.span>
-            ))}
-          </h2>
-          <form onSubmit={handleRegister} className="space-y-4">
+          <div className="flex flex-col items-center justify-center">
+            <p className="bg-[#0B74FF] h-18 w-18 flex justify-center items-center rounded-full">
+              <Briefcase size={40} color="#ffffff" strokeWidth={1.5} />
+            </p>
+            <h2 className="text-2xl font-semibold text-[#0B74FF] text-center mb-6">
+              {word.map((text, indext) => (
+                <motion.span
+                  key={indext}
+                  initial={{ opacity: 0, x: -40 }}
+                  animate={{ opacity: 1, x: 0 }}
+                  transition={{
+                    duration: 0.6,
+                    delay: indext * 0.2,
+                    ease: "easeInOut",
+                  }}
+                >
+                  {text}{" "}
+                </motion.span>
+              ))}
+            </h2>
+            <p className="text-[#707C90] font-sans">
+              Create your account and start your journey
+            </p>
+          </div>
+          <form onSubmit={handleRegister} className="space-y-4 mt-5">
             {/* name */}
             <label className="label">Name </label>
             <input
@@ -162,30 +170,32 @@ const Register = () => {
             {/*password */}
             <label className="label"> Password </label>
             <div className=" relative">
-                <input
-              type={toggle ? "text" : "password"}
-              name="password"
-              className="w-full border-2 border-gray-300 rounded-lg px-4 py-2 outline-none transition focus:border-indigo-400 "
-              placeholder="Enter Your Password"
-            />
-            <button
-              onClick={hangleToggle}
-              className=" absolute btn btn-xs top-2 right-5"
-            >
-              {toggle ? (
-                <Eye size={16} strokeWidth={1.25} />
-              ) : (
-                <EyeOff size={16} strokeWidth={1.25} />
-              )}
-            </button>
+              <input
+                type={toggle ? "text" : "password"}
+                name="password"
+                className="w-full border-2 border-gray-300 rounded-lg px-4 py-2 outline-none transition focus:border-indigo-400 "
+                placeholder="Enter Your Password"
+              />
+              <button
+                onClick={hangleToggle}
+                className=" absolute btn btn-xs top-2 right-5"
+              >
+                {toggle ? (
+                  <Eye size={16} strokeWidth={1.25} />
+                ) : (
+                  <EyeOff size={16} strokeWidth={1.25} />
+                )}
+              </button>
             </div>
-            <motion.button
-              className="w-full text-white bg-indigo-500 py-3 px-3 rounded-lg"
-              whileHover={{ scale: 1.05 }}
-              whileTap={{ scale: 0.95 }}
-            >
-              Register
-            </motion.button>
+            <div className=" mt-5">
+              <motion.button
+                className="w-full text-white bg-[#0B74FF] hover:bg-[#075ED6] py-3 px-3 rounded-lg"
+                whileTap={{ scale: 0.99 }}
+                whileHover={{ scale: 1.01, transition: { yoyo: Infinity } }}
+              >
+                Create Account
+              </motion.button>
+            </div>
           </form>
 
           {/* google sign up */}

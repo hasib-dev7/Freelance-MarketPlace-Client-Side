@@ -1,14 +1,19 @@
 /* eslint-disable no-unused-vars */
 import { motion } from "framer-motion";
-import { use } from "react";
+import { use, useState } from "react";
 import { AuthContext } from "../../context/AuthContex";
+import { toast } from "react-toastify";
+import { RingLoader } from "react-spinners";
+
+
 
 const AddJob = () => {
   const { user } = use(AuthContext);
+  const [isSubmitting,setIsSubmitting]=useState(false)
   //   console.log(user.email);
   const emailAddress =
     user.email || (user.providerData[0] && user.providerData[0].email);
-  console.log(emailAddress);
+//   console.log(emailAddress);
   const cardVariants = {
     hidden: { opacity: 0, y: 30, scale: 0.98 },
     show: {
@@ -20,6 +25,46 @@ const AddJob = () => {
   };
   const message = "Post a New Job";
   const word = message.split(" ");
+//   add job post 
+const handleJobPost=async(e)=>{
+    e.preventDefault()
+    const title=e.target.title.value;
+    const userName=e.target.PostUserName.value;
+    const category=e.target.category.value;
+    const description=e.target.description.value;
+    const image=e.target.image.value;
+    const now=new Date()
+    const date=now.toISOString();
+    // post job to the server
+    const postJob={
+        title,userName,category,description,image,date
+    }
+    // 
+    try {
+        setIsSubmitting(true)
+        await fetch("http://localhost:8000/jobs",{
+          method:"POST",
+          headers:{
+            "content-type":"application/json"
+          },
+          body:JSON.stringify(postJob)
+        })
+        .then(res=>res.json())
+        .then(data=>{
+          if(data.insertedId)
+            console.log("data")
+        setTimeout(()=>{
+            toast.success(`${title} Job Posted Successfully!`)
+            setIsSubmitting(false)
+            e.target.reset()
+        },1000)
+        })
+    } catch (error) {
+        console.log(error)
+    }
+    console.log(postJob)
+
+}
   return (
     <>
       <motion.div
@@ -47,16 +92,16 @@ const AddJob = () => {
         <p className="text-[#707C90] font-sans">
           Fill in the details below to post your job opportunity
         </p>
-        <form className="space-y-4">
+        <form onSubmit={handleJobPost} className="space-y-4">
           {/* jobs title */}
           <div className=" mt-5">
             <label className=" text-gray-800 font-medium text-sm ">
-              {" "}
+             
               Job Title
             </label>
             <input
               type="text"
-              name="job-title"
+              name="title"
               required
               className="w-full border-2 bg-[#f8f9fb] border-gray-300 rounded-lg px-4 py-2 mt-2 outline-none transition focus:border-indigo-400"
             />
@@ -68,7 +113,7 @@ const AddJob = () => {
             </label>
             <input
               type="text"
-              name="post-user-name"
+              name="PostUserName"
               value={user?.displayName}
               readOnly
               className="w-full border-2 bg-[#f8f9fb] border-gray-300 rounded-lg px-4 py-2 mt-2 outline-none transition focus:border-indigo-400 text-gray-700  text-sm font-sans"
@@ -129,7 +174,7 @@ const AddJob = () => {
             </label>
             <textarea
               type="text"
-              name="job-summary"
+              name="description"
               required
               className="w-full border-2 bg-[#f8f9fb] border-gray-300 rounded-lg px-4 py-2 mt-2 outline-none transition focus:border-indigo-400 text-gray-700  text-sm font-sans  placeholder-gray-700"
               placeholder="Describe the job requirements and responsibilities..."
@@ -143,7 +188,7 @@ const AddJob = () => {
             </label>
             <input
               type="text"
-              name="cover-image"
+              name="image"
               required
               className="w-full border-2 bg-[#f8f9fb] border-gray-300 rounded-lg px-4 py-2 mt-2 outline-none transition focus:border-indigo-400 text-gray-700  text-sm font-sans  placeholder-gray-700"
               placeholder="https://example.com/image.jpg"
@@ -170,7 +215,9 @@ const AddJob = () => {
               whileTap={{ scale: 0.99 }}
               whileHover={{ scale: 1.01, transition: { yoyo: Infinity } }}
             >
-             Post Job
+             {
+                isSubmitting?<RingLoader color="#00ff6e" size={30} />:"Post Job"
+             }
             </motion.button>
           </div>
         </form>

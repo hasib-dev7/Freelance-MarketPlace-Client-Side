@@ -3,7 +3,7 @@ import { motion } from "framer-motion";
 import { Link, useLocation, useNavigate } from "react-router";
 import LoginAnimation from "./LoginAnimation";
 import { use, useRef, useState } from "react";
-import { Eye, EyeOff } from "lucide-react";
+import { Briefcase, Eye, EyeOff } from "lucide-react";
 import { toast } from "react-toastify";
 import { AuthContext } from "../../../context/AuthContex";
 const Login = () => {
@@ -11,7 +11,7 @@ const Login = () => {
   const emailRef = useRef();
   const loaction = useLocation();
   const navigate = useNavigate();
-  const message = " Login now!";
+  const message = "Welcome Back";
   const word = message.split(" ");
 
   const cardVariants = {
@@ -57,7 +57,6 @@ const Login = () => {
   // google login
   const handleGoogle = () => {
     googleSignIn().then((res) => {
-      
       setUser(res.user);
       const userName = res.user.displayName || "User"; // fallback
       toast.success(`Welcome back, ${userName}! 🎉`, {});
@@ -85,23 +84,31 @@ const Login = () => {
           animate="show"
           className=" w-full max-w-md bg-white/80 backdrop-blur-md rounded-2xl shadow-xl p-8 border border-white/40 "
         >
-          <h2 className="text-2xl font-semibold text-gray-800 text-center mb-6">
-            {word.map((text, indext) => (
-              <motion.span
-                key={indext}
-                initial={{ opacity: 0, x: -40 }}
-                animate={{ opacity: 1, x: 0 }}
-                transition={{
-                  duration: 0.6,
-                  delay: indext * 0.2,
-                  ease: "easeInOut",
-                }}
-              >
-                {text}{" "}
-              </motion.span>
-            ))}
-          </h2>
-          <form onSubmit={handleLogin} className="space-y-4">
+          <div className="flex flex-col items-center justify-center">
+            <p className="bg-[#0B74FF] h-18 w-18 flex justify-center items-center rounded-full">
+              <Briefcase size={40} color="#ffffff" strokeWidth={1.5} />
+            </p>
+            <h2 className="text-2xl font-semibold text-[#0B74FF] text-center mb-6">
+              {word.map((text, indext) => (
+                <motion.span
+                  key={indext}
+                  initial={{ opacity: 0, x: -40 }}
+                  animate={{ opacity: 1, x: 0 }}
+                  transition={{
+                    duration: 0.6,
+                    delay: indext * 0.2,
+                    ease: "easeInOut",
+                  }}
+                >
+                  {text}{" "}
+                </motion.span>
+              ))}
+            </h2>
+            <p className="text-[#707C90] font-sans">
+              Sign in to continue to TaskHub
+            </p>
+          </div>
+          <form onSubmit={handleLogin} className="space-y-4 mt-5">
             {/* eamail address */}
             <label className="label"> Email </label>
             <input
@@ -135,13 +142,15 @@ const Login = () => {
             <div>
               <a className="link link-hover ">Forgot password?</a>
             </div>
-            <motion.button
-              className="w-full text-white bg-indigo-500 py-3 px-3 rounded-lg"
-              whileHover={{ scale: 1.05 }}
-              whileTap={{ scale: 0.95 }}
-            >
-              Login
-            </motion.button>
+            <div className=" mt-5">
+              <motion.button
+                className="w-full text-white bg-[#0B74FF] hover:bg-[#075ED6] py-3 px-3 rounded-lg"
+                whileTap={{ scale: 0.99 }}
+                whileHover={{ scale: 1.01, transition: { yoyo: Infinity } }}
+              >
+                Sign In
+              </motion.button>
+            </div>
           </form>
           {/* google sign up */}
           <motion.button

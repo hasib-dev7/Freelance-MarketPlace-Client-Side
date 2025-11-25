@@ -6,6 +6,7 @@ import LoadingSpinner from "../../components/loadingSpinner/LoadingSpinner";
 import JobCard from "../../components/jobCard/JobCard";
 import { Link } from "react-router";
 import CategoriySection from "../../components/categoriy/CategoriySection";
+import AboutSection from "../../components/aboutSection/AboutSection";
 
 const Home = () => {
   const [jobs, setJobs] = useState([]);
@@ -35,9 +36,11 @@ const Home = () => {
     <>
       {/* latest job */}
       <div className="py-5 md:py-6 lg:py-8 mb-5">
-        <h1 className="text-4xl text-[#0F172A] font-bold mb-4 text-center">Latest Job Opportunities</h1>
+        <h1 className="text-4xl text-[#0F172A] font-bold mb-4 text-center">
+          Latest Job Opportunities
+        </h1>
         <p className="text-lg text-[#707C90] font-sans text-center">
-         Discover the newest jobs posted on our platform
+          Discover the newest jobs posted on our platform
         </p>
       </div>
       <div className="mt-10 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-10">
@@ -46,18 +49,22 @@ const Home = () => {
         ))}
       </div>
       {/*  */}
-        <Link to={"/all-job"} className=" mt-10  flex flex-col items-center">
-              <motion.button
-                className=" text-white bg-[#0B74FF] hover:bg-[#075ED6] py-3 px-8 rounded-lg"
-                whileTap={{ scale: 0.99 }}
-                whileHover={{ scale: 1.01, transition: { yoyo: Infinity } }}
-              >
-               View All Job
-              </motion.button>
-            </Link>
+      <Link to={"/all-job"} className=" mt-10  flex flex-col items-center">
+        <motion.button
+          className=" text-white bg-[#0B74FF] hover:bg-[#075ED6] py-3 px-8 rounded-lg"
+          whileTap={{ scale: 0.99 }}
+          whileHover={{ scale: 1.01, transition: { yoyo: Infinity } }}
+        >
+          View All Job
+        </motion.button>
+      </Link>
       {/* category section */}
       <div className="mt-10">
-        <CategoriySection/>
+        <CategoriySection />
+      </div>
+      {/* about section add */}
+      <div className="my-10">
+        <AboutSection></AboutSection>
       </div>
     </>
   );

@@ -25,21 +25,22 @@ const AllJob = () => {
   }, []);
   if (loading) return <LoadingSpinner></LoadingSpinner>;
   if (error) return <p className="text-red-500 text-xl">{error}</p>;
-//   console.log("all job data", jobs);
+  //   console.log("all job data", jobs);
+ 
   return (
     <>
       <div className="py-5 md:py-8 lg:py-10 mb-5">
         <h1 className="text-4xl text-[#0F172A] font-bold mb-4">All Jobs</h1>
         <p className="text-lg text-[#707C90] font-sans">
-          Browse through all available job opportunities
+          Browse through all available job opportunities, explore different
+          roles, and find the perfect match for your skills and career goals.
         </p>
       </div>
       <div className="mt-10 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-10">
-        {
-            jobs.map(job=><JobCard key={job._id} job={job}></JobCard>)
-        }
+        {jobs.map((job) => (
+          <JobCard key={job._id} job={job}></JobCard>
+        ))}
       </div>
-     
     </>
   );
 };

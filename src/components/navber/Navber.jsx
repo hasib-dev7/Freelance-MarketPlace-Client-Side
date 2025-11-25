@@ -3,7 +3,7 @@ import { Link, NavLink } from "react-router";
 import { AuthContext } from "../../context/AuthContex";
 
 const Navber = () => {
-  const { logOut,user } = use(AuthContext);
+  const { logOut, user } = use(AuthContext);
   const handleLogout = () => {
     logOut().then(() => {
       // console.log("logout success");
@@ -22,6 +22,9 @@ const Navber = () => {
       </li>
       <li>
         <NavLink to="/add-job">Add Job</NavLink>
+      </li>
+      <li>
+        <NavLink to="/my-added-jobs">My Posted Jobs</NavLink>
       </li>
       <li>
         <NavLink to="/my-accepted-task">My Accepted Tasks</NavLink>
@@ -108,7 +111,7 @@ const Navber = () => {
               <Link to="/auth/login" className="btn btn-outline">
                 Login
               </Link>
-              <Link to="/auth/register"  className="btn btn-primary">
+              <Link to="/auth/register" className="btn btn-primary">
                 Register
               </Link>
             </div>

@@ -2,10 +2,11 @@ import { Outlet } from "react-router";
 import Navber from "../components/navber/Navber";
 import Footer from "../components/footer/Footer";
 import { Bounce, ToastContainer } from "react-toastify";
+import { Toaster } from "react-hot-toast";
 const MainLayout = () => {
   return (
     <>
-      <div className="bg-[#f8f9fb]">
+      <div className="bg-[#f3f5f8]">
         <div className="flex flex-col w-full md:w-11/12 lg:w-10/12 mx-auto min-h-screen  ">
           <Navber></Navber>
           <div className="flex-1 px-4 md:px-6 lg:px-20 ">
@@ -27,6 +28,7 @@ const MainLayout = () => {
         theme="light"
         transition={Bounce}
       />
+     <Toaster></Toaster>
     </>
   );
 };

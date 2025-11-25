@@ -1,23 +1,10 @@
 /* eslint-disable no-unused-vars */
 import { motion } from "framer-motion";
+import { User } from "lucide-react";
 import { Link } from "react-router";
 const JobCard = ({ job }) => {
-  const { title, category, date, description, image,_id } = job;
-//   date formating
-const dateFormate=(dataString)=>{
-    const now=new Date()
-    const created=new Date(dataString)
-    const diff=now-created
-    const hours=Math.floor(diff/(1000*60*60))
-    const days=Math.floor(diff/(1000*60*60*24))
-    if(hours<24){
-        return `${hours}  hours ago`
-    }
-    if(days<30){
-        return `${days} days ago`
-    }
-    return created.toLocaleDateString("en-GB")
-}
+  const { title, category, userName, description, image,_id } = job;
+
   return (
     <>
       <div className="w-full bg-white hover:scale-101 transition-all duration-300 cursor-pointe rounded-2xl">
@@ -27,12 +14,16 @@ const dateFormate=(dataString)=>{
             <p className="px-3 py-1 text-[#0F172A] bg-[#1caa50b4] rounded-2xl">
               {category}
             </p>
-            <p lassName="text-sm text-gray-700  ">{dateFormate(date)}</p>
+          
           </div>
           <h2 className="text-[#0F172A] font-semibold text-2xl mt-3">
             {title}
           </h2>
-          
+          <div className="flex items-center gap-1 text-sm font-sans text-gray-700 mt-1">
+            <User size={18} strokeWidth={1.5} />
+
+            <p>{userName}</p>
+          </div>
           <p className="text-lg font-sans text-gray-700 mt-5">{description.split(" ").slice(0,11).join(" ")+"..."}</p>
           <div className=" mt-5">
             <Link to={`/job-details/${_id}`}>

@@ -33,7 +33,7 @@ const AboutSection = () => {
   ];
   return (
     <>
-      <div className="py-5 md:py-6 lg:py-8 mb-5">
+      <div id="abut" className="py-5 md:py-6 lg:py-8 mb-5">
         <h1 className="text-4xl text-[#0F172A] font-bold mb-4 text-center">
           Why Choose TaskHub?
         </h1>

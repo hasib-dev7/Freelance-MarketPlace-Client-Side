@@ -12,6 +12,7 @@ import Register from "../pages/auth/register/Register";
 import PrivateRouter from "./PrivateRouter";
 import JobDetails from "../pages/jobDetails/JobDetails";
 
+
 const router = createBrowserRouter([
   {
     path: "/",
@@ -70,6 +71,7 @@ const router = createBrowserRouter([
         path: "auth/register",
         element: <Register></Register>,
       },
+      
     ],
   },
 ]);

@@ -7,6 +7,7 @@ import JobCard from "../../components/jobCard/JobCard";
 import { Link } from "react-router";
 import CategoriySection from "../../components/categoriy/CategoriySection";
 import AboutSection from "../../components/aboutSection/AboutSection";
+import Banner from "../../components/banner/Banner";
 
 const Home = () => {
   const [jobs, setJobs] = useState([]);
@@ -34,6 +35,10 @@ const Home = () => {
 
   return (
     <>
+      {/* banner section */}
+      <div>
+        <Banner></Banner>
+      </div>
       {/* latest job */}
       <div className="py-5 md:py-6 lg:py-8 mb-5">
         <h1 className="text-4xl text-[#0F172A] font-bold mb-4 text-center">

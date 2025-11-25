@@ -2,7 +2,7 @@
 import { motion } from "framer-motion";
 import axios from "axios";
 import { use, useEffect, useState } from "react";
-import { useParams } from "react-router";
+import { useNavigate, useParams } from "react-router";
 import LoadingSpinner from "../../components/loadingSpinner/LoadingSpinner";
 import { Mail, User, Clock, Calendar } from "lucide-react";
 import { AuthContext } from "../../context/AuthContex";
@@ -15,6 +15,7 @@ const JobDetails = () => {
   const [details, setDetails] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
+  const navigate = useNavigate();
   const { title, category, date, description, image, userName, userEmail } =
     details;
   useEffect(() => {
@@ -73,17 +74,19 @@ const JobDetails = () => {
       },
       body: JSON.stringify(acceptJob),
     })
-      .then(async(res) =>{
-        const data=await res.json()
-        if(!res.ok){
-           toast.error(data.message)
-           return
+      .then(async (res) => {
+        const data = await res.json();
+        if (!res.ok) {
+          toast.error(data.message);
+          return;
         }
-       if (data.insertedId) {
+        if (data.insertedId) {
           toast.success(`${title} your job acceptded successfully!`);
+          // navigate to all job page
+          navigate("/all-job");
         }
       })
-     
+
       .catch((err) => {
         toast.error(err);
       });

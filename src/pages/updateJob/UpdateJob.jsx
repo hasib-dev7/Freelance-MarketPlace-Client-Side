@@ -4,13 +4,13 @@ import { useState } from "react";
 
 import { toast } from "react-toastify";
 import { RingLoader } from "react-spinners";
-import { useParams } from "react-router";
+import { useNavigate, useParams } from "react-router";
 
 const UpdateJob = () => {
   const { id } = useParams();
 
   const [isSubmitting, setIsSubmitting] = useState(false);
-
+  const navigate = useNavigate();
   // || (user.providerData[0] && user.providerData[0].email);
   //   console.log(emailAddress);
   const cardVariants = {
@@ -28,21 +28,16 @@ const UpdateJob = () => {
   const handleJobPost = async (e) => {
     e.preventDefault();
     const title = e.target.title.value;
-
     const category = e.target.category.value;
     const description = e.target.description.value;
     const image = e.target.image.value;
-    const now = new Date();
-    const date = now.toISOString();
     // post job to the server
     const postJob = {
       title,
       category,
       description,
       image,
-    
     };
-    
     try {
       setIsSubmitting(true);
       await fetch(`http://localhost:8000/jobs/${id}`, {
@@ -54,13 +49,12 @@ const UpdateJob = () => {
       })
         .then((res) => res.json())
         .then((data) => {
-          if (data.insertedId) 
-            console.log("update data",data);
+          if (data.insertedId) console.log("update data", data);
           setTimeout(() => {
-            
             toast.success(`${title} Job update Successfully!`);
             setIsSubmitting(false);
             e.target.reset();
+            navigate("/my-added-jobs");
           }, 1000);
         });
     } catch (error) {
@@ -107,7 +101,6 @@ const UpdateJob = () => {
             <input
               type="text"
               name="title"
-            
               className="w-full border-2 bg-[#f8f9fb] border-gray-300 rounded-lg px-4 py-2 mt-2 outline-none transition focus:border-indigo-400"
             />
           </div>
@@ -126,7 +119,6 @@ const UpdateJob = () => {
             <div className="relative">
               <select
                 name="category"
-                
                 className="w-full h-10 px-3 pr-8 py-2 text-gray-700 text-sm bg-[#f8f9fb] border-2 border-gray-300 rounded-lg appearance-none focus:border-indigo-400 focus:ring-1 focus:ring-indigo-300 outline-none transition"
                 defaultValue="" // Placeholder default
               >
@@ -168,7 +160,6 @@ const UpdateJob = () => {
             <textarea
               type="text"
               name="description"
-             
               className="w-full border-2 bg-[#f8f9fb] border-gray-300 rounded-lg px-4 py-2 mt-2 outline-none transition focus:border-indigo-400 text-gray-700  text-sm font-sans  placeholder-gray-700"
               placeholder="Describe the job requirements and responsibilities..."
               rows={5}
@@ -182,7 +173,6 @@ const UpdateJob = () => {
             <input
               type="text"
               name="image"
-             
               className="w-full border-2 bg-[#f8f9fb] border-gray-300 rounded-lg px-4 py-2 mt-2 outline-none transition focus:border-indigo-400 text-gray-700  text-sm font-sans  placeholder-gray-700"
               placeholder="https://example.com/image.jpg"
               rows={5}

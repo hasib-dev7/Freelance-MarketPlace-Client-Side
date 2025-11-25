@@ -1,11 +1,212 @@
+/* eslint-disable no-unused-vars */
+import { motion } from "framer-motion";
+import { useState } from "react";
 
+import { toast } from "react-toastify";
+import { RingLoader } from "react-spinners";
+import { useParams } from "react-router";
 
 const UpdateJob = () => {
-    return (
-        <>
-           <h1>update jobs</h1> 
-        </>
-    );
+  const { id } = useParams();
+
+  const [isSubmitting, setIsSubmitting] = useState(false);
+
+  // || (user.providerData[0] && user.providerData[0].email);
+  //   console.log(emailAddress);
+  const cardVariants = {
+    hidden: { opacity: 0, y: 30, scale: 0.98 },
+    show: {
+      opacity: 1,
+      y: 0,
+      scale: 1,
+      transition: { duration: 0.6, ease: "easeOut" },
+    },
+  };
+  const message = " Update Your Job Posting";
+  const word = message.split(" ");
+  //   add job post
+  const handleJobPost = async (e) => {
+    e.preventDefault();
+    const title = e.target.title.value;
+
+    const category = e.target.category.value;
+    const description = e.target.description.value;
+    const image = e.target.image.value;
+    const now = new Date();
+    const date = now.toISOString();
+    // post job to the server
+    const postJob = {
+      title,
+      category,
+      description,
+      image,
+    
+    };
+    
+    try {
+      setIsSubmitting(true);
+      await fetch(`http://localhost:8000/jobs/${id}`, {
+        method: "PATCH",
+        headers: {
+          "content-type": "application/json",
+        },
+        body: JSON.stringify(postJob),
+      })
+        .then((res) => res.json())
+        .then((data) => {
+          if (data.insertedId) 
+            console.log("update data",data);
+          setTimeout(() => {
+            
+            toast.success(`${title} Job update Successfully!`);
+            setIsSubmitting(false);
+            e.target.reset();
+          }, 1000);
+        });
+    } catch (error) {
+      console.log(error);
+    }
+    // console.log(postJob);
+  };
+
+  return (
+    <>
+      {/* update job from */}
+      <motion.div
+        variants={cardVariants}
+        initial="hidden"
+        animate="show"
+        className=" w-full max-w-2xl mx-auto my-8 bg-white/80 backdrop-blur-md rounded-2xl shadow-xl p-8 border border-white/40 "
+      >
+        <h2 className="text-2xl font-semibold text-gray-800  mb-3">
+          {word.map((text, indext) => (
+            <motion.span
+              key={indext}
+              initial={{ opacity: 0, x: -40 }}
+              animate={{ opacity: 1, x: 0 }}
+              transition={{
+                duration: 0.6,
+                delay: indext * 0.2,
+                ease: "easeInOut",
+              }}
+            >
+              {text}{" "}
+            </motion.span>
+          ))}
+        </h2>
+        <p className="text-[#707C90] font-sans">
+          Modify the details of your job. Make sure all information is accurate
+          and up-to-date before saving.
+        </p>
+        <form onSubmit={handleJobPost} className="space-y-4">
+          {/* jobs title */}
+          <div className=" mt-5">
+            <label className=" text-gray-800 font-medium text-sm ">
+              Job Title
+            </label>
+            <input
+              type="text"
+              name="title"
+            
+              className="w-full border-2 bg-[#f8f9fb] border-gray-300 rounded-lg px-4 py-2 mt-2 outline-none transition focus:border-indigo-400"
+            />
+          </div>
+
+          {/* Category */}
+          <div className="w-full mt-5 space-y-2">
+            {/* Label */}
+            <label
+              htmlFor="category"
+              className="block text-gray-800 font-semibold text-sm"
+            >
+              Category
+            </label>
+
+            {/* Select */}
+            <div className="relative">
+              <select
+                name="category"
+                
+                className="w-full h-10 px-3 pr-8 py-2 text-gray-700 text-sm bg-[#f8f9fb] border-2 border-gray-300 rounded-lg appearance-none focus:border-indigo-400 focus:ring-1 focus:ring-indigo-300 outline-none transition"
+                defaultValue="" // Placeholder default
+              >
+                {/* Placeholder */}
+                <option value="" disabled>
+                  Select a category
+                </option>
+
+                {/* Options */}
+                <option value="web-development">Web Development</option>
+                <option value="digital-marketing">Digital Marketing</option>
+                <option value="graphics-design">Graphics Design</option>
+                <option value="content-writing">Content Writing</option>
+              </select>
+
+              {/* Dropdown arrow icon */}
+              <div className="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2 text-gray-500">
+                <svg
+                  className="w-4 h-4"
+                  fill="none"
+                  stroke="currentColor"
+                  viewBox="0 0 24 24"
+                >
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    strokeWidth="2"
+                    d="M19 9l-7 7-7-7"
+                  />
+                </svg>
+              </div>
+            </div>
+          </div>
+          {/* Job Summary */}
+          <div className=" mt-5">
+            <label className=" text-gray-800 font-medium text-sm ">
+              Job Summary
+            </label>
+            <textarea
+              type="text"
+              name="description"
+             
+              className="w-full border-2 bg-[#f8f9fb] border-gray-300 rounded-lg px-4 py-2 mt-2 outline-none transition focus:border-indigo-400 text-gray-700  text-sm font-sans  placeholder-gray-700"
+              placeholder="Describe the job requirements and responsibilities..."
+              rows={5}
+            />
+          </div>
+          {/* cover image */}
+          <div className=" mt-5">
+            <label className=" text-gray-800 font-medium text-sm ">
+              Cover Image URL
+            </label>
+            <input
+              type="text"
+              name="image"
+             
+              className="w-full border-2 bg-[#f8f9fb] border-gray-300 rounded-lg px-4 py-2 mt-2 outline-none transition focus:border-indigo-400 text-gray-700  text-sm font-sans  placeholder-gray-700"
+              placeholder="https://example.com/image.jpg"
+              rows={5}
+            />
+          </div>
+
+          {/* button */}
+          <div className=" mt-5">
+            <motion.button
+              className="w-full text-white bg-[#0B74FF] hover:bg-[#075ED6] py-3 px-3 rounded-lg"
+              whileTap={{ scale: 0.99 }}
+              whileHover={{ scale: 1.01, transition: { yoyo: Infinity } }}
+            >
+              {isSubmitting ? (
+                <RingLoader color="#00ff6e" size={30} />
+              ) : (
+                "Update Job"
+              )}
+            </motion.button>
+          </div>
+        </form>
+      </motion.div>
+    </>
+  );
 };
 
 export default UpdateJob;

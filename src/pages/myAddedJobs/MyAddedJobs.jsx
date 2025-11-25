@@ -5,13 +5,16 @@ import { AuthContext } from "../../context/AuthContex";
 import axios from "axios";
 import LoadingSpinner from "../../components/loadingSpinner/LoadingSpinner";
 import { Calendar, Clock, SquarePen, Trash2 } from "lucide-react";
+import Swal from "sweetalert2";
+import { Link } from "react-router";
 
 const MyAddedJobs = () => {
   const { user } = use(AuthContext);
-  console.log(user);
+//   console.log(user);
   const [myJobs, setMyJobs] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
+  const [refetch, setRefetch] = useState(false);
   useEffect(() => {
     const allJobsFeatch = async () => {
       setLoading(true);
@@ -22,17 +25,42 @@ const MyAddedJobs = () => {
         );
         setMyJobs(res.data);
         setLoading(false);
-        console.log(res.data);
+        // console.log(res.data);
       } catch (error) {
         setError(error.message);
       }
     };
 
     allJobsFeatch();
-  }, [user]);
+  }, [user, refetch]);
   if (loading) return <LoadingSpinner></LoadingSpinner>;
   if (error) return <p className="text-red-500 text-xl">{error}</p>;
-  console.log("my job data", myJobs);
+
+  // my post job delete
+  const handleDelete = (id) => {
+    console.log("delete id", id);
+    Swal.fire({
+      title: "Are you sure?",
+      text: "You won't be able to revert this!",
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonColor: "#3085d6",
+      cancelButtonColor: "#d33",
+      confirmButtonText: "Yes, delete it!",
+    }).then((result) => {
+      if (result.isConfirmed) {
+        fetch(`http://localhost:8000/jobs/${id}`, {
+          method: "DELETE",
+        });
+        setRefetch(!refetch);
+        Swal.fire({
+          title: "Deleted!",
+          text: "Your file has been deleted.",
+          icon: "success",
+        });
+      }
+    });
+  };
   //   date formating
   const dateFormate = (dataString) => {
     const now = new Date();
@@ -96,7 +124,7 @@ const MyAddedJobs = () => {
               {/* button */}
               <div className="flex flex-col lg:flex-row justify-between items-center gap-3 md:gap-5 lg:gap-10 mt-5">
                 {/* update button */}
-                <div className="w-full ">
+                <Link to={`/update-job/${job._id}`} className="w-full ">
                   <motion.button
                     className="flex justify-center items-center gap-2 w-full text-xl font-medium text-[#0F172A] border border-gray-200 bg-gray-100 hover:bg-orange-500 hover:text-white  py-3 px-3 rounded-lg "
                     whileTap={{ scale: 0.99 }}
@@ -108,9 +136,9 @@ const MyAddedJobs = () => {
                     <SquarePen size={18} />
                     <span>Update</span>
                   </motion.button>
-                </div>
+                </Link>
                 {/* delete button */}
-                <div className="w-full">
+                <div onClick={() => handleDelete(job._id)} className="w-full">
                   <motion.button
                     className="flex justify-center items-center gap-2 w-full text-xl font-medium  border border-gray-200 bg-[#e63946]  text-white  py-3 px-3 rounded-lg "
                     whileTap={{ scale: 0.99 }}

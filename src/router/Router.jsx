@@ -35,19 +35,23 @@ const router = createBrowserRouter([
       },
       {
         path: "job-details/:id",
-        element: <JobDetails></JobDetails>,
-      },
-      {
-        path: "my-added-jobs",
         element: (
-         
-            <MyAddedJobs></MyAddedJobs>
-        
+          <PrivateRouter>
+            <JobDetails></JobDetails>
+          </PrivateRouter>
         ),
       },
       {
+        path: "my-added-jobs",
+        element: <PrivateRouter>
+          <MyAddedJobs></MyAddedJobs>
+        </PrivateRouter>,
+      },
+      {
         path: "update-job/:id",
-        element: <UpdateJob></UpdateJob>,
+        element: <PrivateRouter>
+          <UpdateJob></UpdateJob>
+        </PrivateRouter>,
       },
       {
         path: "my-accepted-task",

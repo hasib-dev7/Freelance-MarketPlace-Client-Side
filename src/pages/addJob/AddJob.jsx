@@ -4,14 +4,14 @@ import { use, useState } from "react";
 import { AuthContext } from "../../context/AuthContex";
 import { toast } from "react-toastify";
 import { RingLoader } from "react-spinners";
+import { useNavigate } from "react-router";
 
 const AddJob = () => {
   const { user } = use(AuthContext);
+  const navigate=useNavigate()
   const [isSubmitting, setIsSubmitting] = useState(false);
-  //   console.log(user.email);
   const emailAddress =
     user.email || (user.providerData[0] && user.providerData[0].email);
-  //   console.log(emailAddress);
   const cardVariants = {
     hidden: { opacity: 0, y: 30, scale: 0.98 },
     show: {
@@ -61,12 +61,13 @@ const AddJob = () => {
             toast.success(`${title} Job Posted Successfully!`);
             setIsSubmitting(false);
             e.target.reset();
+            navigate("/my-added-jobs")
           }, 1000);
         });
     } catch (error) {
       console.log(error);
     }
-    console.log(postJob);
+   
   };
   return (
     <>

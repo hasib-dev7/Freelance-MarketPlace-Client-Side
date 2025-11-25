@@ -20,7 +20,12 @@ const MyAcceptedTasks = () => {
       setError(null);
       try {
         const res = await axios.get(
-          `http://localhost:8000/accept-jobs?email=${user?.email}`
+          `http://localhost:8000/accept-jobs?email=${user?.email}`,
+          {
+            headers: {
+              authorization: `Bearer ${user.accessToken}`,
+            },
+          }
         );
         setAcceptJobs(res.data);
         setLoading(false);

@@ -10,7 +10,7 @@ import { Link } from "react-router";
 
 const MyAddedJobs = () => {
   const { user } = use(AuthContext);
-//   console.log(user);
+  //   console.log(user);
   const [myJobs, setMyJobs] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
@@ -21,7 +21,12 @@ const MyAddedJobs = () => {
       setError(null);
       try {
         const res = await axios.get(
-          `http://localhost:8000/my-jobs?email=${user?.email}`
+          `http://localhost:8000/my-jobs?email=${user?.email}`,
+          {
+            headers: {
+              authorization: `Bearer ${user.accessToken}`,
+            },
+          }
         );
         setMyJobs(res.data);
         setLoading(false);

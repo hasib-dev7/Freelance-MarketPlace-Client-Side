@@ -8,7 +8,6 @@ import { toast } from "react-toastify";
 import { AuthContext } from "../../../context/AuthContex";
 const Login = () => {
   const [toggle, setToggle] = useState(false);
-  const emailRef = useRef();
   const loaction = useLocation();
   const navigate = useNavigate();
   const message = "Welcome Back";

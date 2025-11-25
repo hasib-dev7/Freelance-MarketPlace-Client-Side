@@ -23,7 +23,11 @@ const JobDetails = () => {
       try {
         setLoading(true);
         setError(null);
-        const res = await axios.get(`http://localhost:8000/jobs/${id}`);
+        const res = await axios.get(`http://localhost:8000/jobs/${id}`, {
+          headers: {
+            authorization: `Bearer ${user.accessToken}`,
+          },
+        });
         setDetails(res.data);
         setLoading(false);
       } catch (error) {
@@ -31,7 +35,7 @@ const JobDetails = () => {
       }
     };
     fetchJobDetails();
-  }, [id]);
+  }, [id,user]);
   if (loading) return <LoadingSpinner></LoadingSpinner>;
   if (error) return <p className="text-red-500 text-xl">{error}</p>;
   // accept job button

@@ -21,7 +21,7 @@ const MyAddedJobs = () => {
       setError(null);
       try {
         const res = await axios.get(
-          `http://localhost:8000/my-jobs?email=${user?.email}`,
+          `https://freelance-market-place-server-side.vercel.app/my-jobs?email=${user?.email}`,
           {
             headers: {
               authorization: `Bearer ${user.accessToken}`,
@@ -54,9 +54,12 @@ const MyAddedJobs = () => {
       confirmButtonText: "Yes, delete it!",
     }).then((result) => {
       if (result.isConfirmed) {
-        fetch(`http://localhost:8000/jobs/${id}`, {
-          method: "DELETE",
-        });
+        fetch(
+          `https://freelance-market-place-server-side.vercel.app/jobs/${id}`,
+          {
+            method: "DELETE",
+          }
+        );
         setRefetch(!refetch);
         Swal.fire({
           title: "Deleted!",

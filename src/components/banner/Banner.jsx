@@ -31,7 +31,7 @@ const Banner = () => {
                 >
                   How Reliable is this Platform?
                 </motion.button>
-                s
+                
               </a>
 
               {/* Button 2 - Primary */}
@@ -56,7 +56,7 @@ const Banner = () => {
             <img
               src={bannerImg}
               alt="banner"
-              className="w-[80%] lg:w-full drop-shadow-2xl"
+              className="w-[80%] lg:w-full drop-shadow-2xl rounded-md"
             />
           </motion.div>
         </div>

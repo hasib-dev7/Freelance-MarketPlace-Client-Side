@@ -40,13 +40,16 @@ const UpdateJob = () => {
     };
     try {
       setIsSubmitting(true);
-      await fetch(`http://localhost:8000/jobs/${id}`, {
-        method: "PATCH",
-        headers: {
-          "content-type": "application/json",
-        },
-        body: JSON.stringify(postJob),
-      })
+      await fetch(
+        `https://freelance-market-place-server-side.vercel.app/jobs/${id}`,
+        {
+          method: "PATCH",
+          headers: {
+            "content-type": "application/json",
+          },
+          body: JSON.stringify(postJob),
+        }
+      )
         .then((res) => res.json())
         .then((data) => {
           if (data.insertedId) console.log("update data", data);

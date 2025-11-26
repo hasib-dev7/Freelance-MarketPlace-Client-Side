@@ -23,11 +23,14 @@ const JobDetails = () => {
       try {
         setLoading(true);
         setError(null);
-        const res = await axios.get(`http://localhost:8000/jobs/${id}`, {
-          headers: {
-            authorization: `Bearer ${user.accessToken}`,
-          },
-        });
+        const res = await axios.get(
+          `https://freelance-market-place-server-side.vercel.app/jobs/${id}`,
+          {
+            headers: {
+              authorization: `Bearer ${user.accessToken}`,
+            },
+          }
+        );
         setDetails(res.data);
         setLoading(false);
       } catch (error) {
@@ -35,7 +38,7 @@ const JobDetails = () => {
       }
     };
     fetchJobDetails();
-  }, [id,user]);
+  }, [id, user]);
   if (loading) return <LoadingSpinner></LoadingSpinner>;
   if (error) return <p className="text-red-500 text-xl">{error}</p>;
   // accept job button
@@ -71,7 +74,7 @@ const JobDetails = () => {
     };
     // console.log(acceptJob);
     // accept job data send to server side
-    fetch(`http://localhost:8000/accept-jobs`, {
+    fetch(`https://freelance-market-place-server-side.vercel.app/accept-jobs`, {
       method: "POST",
       headers: {
         "content-type": "application/json",

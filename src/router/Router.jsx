@@ -11,12 +11,16 @@ import Login from "../pages/auth/login/Login";
 import Register from "../pages/auth/register/Register";
 import PrivateRouter from "./PrivateRouter";
 import JobDetails from "../pages/jobDetails/JobDetails";
-
+import NotFound from "../pages/error/NotFound";
+import AllErrorPages from "../pages/error/AllErrorPages";
+import LoadingSpinner from "../components/loadingSpinner/LoadingSpinner";
 
 const router = createBrowserRouter([
   {
     path: "/",
     Component: MainLayout,
+    errorElement: <AllErrorPages></AllErrorPages>,
+    hydrateFallbackElement: <LoadingSpinner></LoadingSpinner>,
     children: [
       {
         index: true,
@@ -44,15 +48,19 @@ const router = createBrowserRouter([
       },
       {
         path: "my-added-jobs",
-        element: <PrivateRouter>
-          <MyAddedJobs></MyAddedJobs>
-        </PrivateRouter>,
+        element: (
+          <PrivateRouter>
+            <MyAddedJobs></MyAddedJobs>
+          </PrivateRouter>
+        ),
       },
       {
         path: "update-job/:id",
-        element: <PrivateRouter>
-          <UpdateJob></UpdateJob>
-        </PrivateRouter>,
+        element: (
+          <PrivateRouter>
+            <UpdateJob></UpdateJob>
+          </PrivateRouter>
+        ),
       },
       {
         path: "my-accepted-task",
@@ -71,7 +79,10 @@ const router = createBrowserRouter([
         path: "auth/register",
         element: <Register></Register>,
       },
-      
+      {
+        path: "*",
+        element: <NotFound></NotFound>,
+      },
     ],
   },
 ]);

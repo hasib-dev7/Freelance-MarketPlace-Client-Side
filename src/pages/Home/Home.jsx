@@ -18,7 +18,9 @@ const Home = () => {
       setLoading(true);
       setError(null);
       try {
-        const res = await axios.get("http://localhost:8000/latest-jobs");
+        const res = await axios.get(
+          "https://freelance-market-place-server-side.vercel.app/latest-jobs"
+        );
         setJobs(res.data);
         setLoading(false);
         // console.log(res.data);

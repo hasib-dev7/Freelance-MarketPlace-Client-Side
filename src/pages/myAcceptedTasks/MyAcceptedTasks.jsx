@@ -20,7 +20,7 @@ const MyAcceptedTasks = () => {
       setError(null);
       try {
         const res = await axios.get(
-          `http://localhost:8000/accept-jobs?email=${user?.email}`,
+          `https://freelance-market-place-server-side.vercel.app/accept-jobs?email=${user?.email}`,
           {
             headers: {
               authorization: `Bearer ${user.accessToken}`,
@@ -42,23 +42,29 @@ const MyAcceptedTasks = () => {
   //   console.log("accepted job data", accetpJobs);
   // handle delete accepted job
   const handleDelete = async (id) => {
-    await fetch(`http://localhost:8000/accept-jobs/${id}`, {
-      method: "DELETE",
-    });
+    await fetch(
+      `https://freelance-market-place-server-side.vercel.app/accept-jobs/${id}`,
+      {
+        method: "DELETE",
+      }
+    );
     toast.error(` Task Cancelled!`);
     setRefetch(!refetch);
   };
   // handle done accepted job
   const handleDone = async (id) => {
-    await fetch(`http://localhost:8000/accept-jobs/${id}`, {
-      method: "DELETE",
-    });
+    await fetch(
+      `https://freelance-market-place-server-side.vercel.app/accept-jobs/${id}`,
+      {
+        method: "DELETE",
+      }
+    );
     toast.success(`Task Completed Successfully!`);
     setRefetch(!refetch);
   };
   return (
     <>
-      <div className="overflow-x-auto">
+      <div className="overflow-x-auto mt-5 lg:mt-10">
         <table className="table">
           {/* head */}
           <thead>

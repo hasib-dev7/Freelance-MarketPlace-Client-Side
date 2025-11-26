@@ -8,7 +8,7 @@ import { useNavigate } from "react-router";
 
 const AddJob = () => {
   const { user } = use(AuthContext);
-  const navigate=useNavigate()
+  const navigate = useNavigate();
   const [isSubmitting, setIsSubmitting] = useState(false);
   const emailAddress =
     user.email || (user.providerData[0] && user.providerData[0].email);
@@ -47,13 +47,16 @@ const AddJob = () => {
     //
     try {
       setIsSubmitting(true);
-      await fetch("http://localhost:8000/jobs", {
-        method: "POST",
-        headers: {
-          "content-type": "application/json",
-        },
-        body: JSON.stringify(postJob),
-      })
+      await fetch(
+        "https://freelance-market-place-server-side.vercel.app/jobs",
+        {
+          method: "POST",
+          headers: {
+            "content-type": "application/json",
+          },
+          body: JSON.stringify(postJob),
+        }
+      )
         .then((res) => res.json())
         .then((data) => {
           if (data.insertedId) console.log("data");
@@ -61,13 +64,12 @@ const AddJob = () => {
             toast.success(`${title} Job Posted Successfully!`);
             setIsSubmitting(false);
             e.target.reset();
-            navigate("/my-added-jobs")
+            navigate("/my-added-jobs");
           }, 1000);
         });
     } catch (error) {
       console.log(error);
     }
-   
   };
   return (
     <>
